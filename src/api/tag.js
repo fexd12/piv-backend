@@ -7,26 +7,21 @@ const router = Router();
 router.post('/',async (req,res)=>{
     
     let tag = req.body.tag;
+    // console.log(tag);
     let dao = new tagDAO();
     
-    await dao.insertInto(tag).then(()=>{
-
+    await dao.readbyid(tag).then(async (result)=>{
+        if(result === undefined){
+            await dao.insertInto(tag);
+            res.send('tag cadastrada com sucesso');
+        }
+        else{
+            res.send('tag ja Cadastrada');
+        }
     }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
+        res.send(a);
     })
-    //console.log(tag);
-    // try{
-    //     await dao.readbyid(tag).then(async(d)=>{
-    //         if(d === undefined){
-    //             await dao.insertInto(tag);
-    //         }
-    //         }).catch((a)=>{
-    //         })
-    //     res.send('tag cadastrada');
-    // }catch(err){
-    //     res.send(err);
-    // }
+    
 });
 
 router.get('/all',async(req,res)=>{
