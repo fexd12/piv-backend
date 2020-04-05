@@ -43,7 +43,17 @@ class userstagDAO{
         await client.query(_query,values).catch((a)=>console.log(a))
         await client.end();
         return true
-    }   
+    }
+
+    async readbyid(id){
+        let client  = criaClient();
+        await client.connect();
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE ${this.config.pk} = $1`
+
+        let result = await client.query(_query,[id]);
+        return result.rows
+
+    }
 }
 
 

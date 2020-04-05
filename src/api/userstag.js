@@ -1,6 +1,8 @@
 import {Router} from 'express';
 
 import {userstagDAO} from '../dao/userstagDAO';
+import {usersDAO} from '../dao/usersDAO';
+import {tagDAO} from '../dao/tagDAO';
 
 const router = Router();
 
@@ -16,10 +18,18 @@ router.get('/',async(req,res)=>{
 
 router.post('/',async(req,res)=>{
     let dao = new userstagDAO();
-
-    await dao.insertInto(req.body).catch((a)=>{
-        res.send(a)
-    })
+    let users = new usersDAO();
+    let tag = new tagDAO();
+    
+    await dao.insertInto(req.body).then(async (abc)=>{
+        await users.UpdateUser(req.body.name).catch((abc)=>{
+            res.send(abc);
+        })
+        await tag.UpdateTag(req.body.tag).catch((abc)=>{
+            res.send(abc);
+        })
+    })   
+    
 })
 
 export default router
