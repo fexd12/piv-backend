@@ -9,8 +9,8 @@ class usersDAO{
             fields: [
               'id',
               'name',
-              'created_at',
-              'update_at'
+              'email',
+              'status'
             ],
             pk: 'id'
           };
@@ -33,20 +33,31 @@ class usersDAO{
         await client.end();
         return result.rows
     }
-
-    async readUsersTags(){
-        let client  = criaClient();
+    
+    async delete(id){
+        let client = criaClient();
         await client.connect();
-        let _query = `SELECT ut.id,u.name, t.tag, ut.acesso
-        FROM users_tag as ut
-    INNER JOIN tags as t
-        ON t.id = ut.id_tag
-    INNER JOIN users as u
-        on u.id = ut.id_users`;
-        let result = await client.query(_query);
-        await client.end();
-        return result.rows
+        let _query = `DELETE FROM ${this.config.table} WHERE ${this.config.pk} = $1`;
+        let result = await client.query(_query,[id])
+        return result
+    }
 
+    async update(questionario){
+        let client = criaClient();
+        await client.connect();
+        let _query = `UPDATE ${this.config.table} SET name=$1, email=$2 WHERE ${this.config.pk} = $3`;
+        let result = await client.query(_query,[questionario.name,questionario.email,questionario.id])
+        
+        return result
+    }
+    
+    async UpdateUser(id){
+        let client = criaClient();
+        await client.connect();
+        let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
+        let result = await client.query(_query,[id])
+        
+        return result
     }
 
     async readbyid(id){
@@ -58,12 +69,23 @@ class usersDAO{
         return result.rows
     }
 
-    async insertInto(tag){
+    async insertInto(questionario){
         // let query = `insert into ${this.config.table} (${this.config.fields.join(',')}) values (${this.config.fields.map(q=>'?').join(',')})`;
         let client = criaClient();
         await client.connect();
-        let _query = `INSERT INTO ${this.config.table} (${this.config.fields.join(',')}) values ?`;
-        await client.query
+        let _query = `INSERT INTO ${this.config.table} (name,email,status) values ($1,$2,'s')`;
+        let values = [questionario.name,questionario.email];
+        await client.query(_query,values);
+        return true
+    }
+
+    async readUsersTag(){
+        let client =  criaClient();
+        await client.connect();
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} where status = 's'`;
+        let result = await client.query(_query);
+        await client.end();
+        return result.rows
     }
 }
 
