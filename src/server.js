@@ -6,6 +6,7 @@ import tempo from './api/tempo';
 import tag from './api/tag';
 import users from  './api/users';
 import userstag from './api/userstag';
+import salas from './api/salas';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use('/tempo',tempo);
 app.use('/tag',tag);
 app.use('/users',users);
 app.use('/userstag',userstag);
+app.use('/salas',salas);
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
