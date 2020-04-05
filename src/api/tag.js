@@ -50,5 +50,18 @@ router.get('/', async (req, res) => {
     
 });
 
+router.get('/userstag', async (req, res) => {
+    let dao = new tagDAO();
+
+    await dao.readUsersTag().then((result)=>{
+        //console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }).catch((a)=>{
+        //console.log(a);
+        res.send(a)
+    })
+    
+});
+
 
 export default router

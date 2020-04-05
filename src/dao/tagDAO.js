@@ -10,6 +10,7 @@ class tagDAO{
               'tag',
               'created_at',
               'update_at',
+              'status'
             ],
             pk: 'id'
           };
@@ -24,6 +25,17 @@ class tagDAO{
         await client.end();
 
         return result.rowCount
+    }
+
+    async readUsersTag(){
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} where status='s'`;
+        const client = criaClient();
+        await client.connect();
+        let result = await client.query(_query);
+
+        await client.end();
+
+        return result.rows
     }
 
     async read(){
@@ -57,12 +69,20 @@ class tagDAO{
         
         const client = criaClient();
         await client.connect();
-        let _query = `INSERT INTO ${this.config.table} (tag) values ('${tag}')`;
+        let _query = `INSERT INTO ${this.config.table} (tag, status) values ('${tag}','s')`;
         // console.log(_query);
         let resut = await client.query(_query);
         await client.end();
         
         return true
+    }
+    async UpdateTag(id){
+        let client = criaClient();
+        await client.connect();
+        let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
+        let result = await client.query(_query,[id])
+
+        return result
     }
 }
 
