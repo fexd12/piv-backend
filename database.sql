@@ -123,3 +123,85 @@ ALTER SEQUENCE public.users_tag_sequence
 
 ALTER TABLE public.users_tag
     ADD COLUMN acesso integer;
+
+CREATE SEQUENCE public.sala_sequence
+    INCREMENT 1
+    START 1;
+
+ALTER SEQUENCE public.sala_sequence
+    OWNER TO postgres;
+
+CREATE SEQUENCE public.agendamento_sequence
+    INCREMENT 1
+    START 1;
+
+ALTER SEQUENCE public.agendamento_sequence
+    OWNER TO postgres;
+
+ALTER TABLE public.tags
+    ALTER COLUMN id SET DEFAULT nextval('tag_sequence');
+
+ALTER TABLE public.users
+    ALTER COLUMN id SET DEFAULT nextval('users_sequence');
+
+ALTER TABLE public.users_tag
+    ALTER COLUMN id SET DEFAULT nextval('users_tag_sequence');
+
+CREATE TABLE public.sala
+(
+    id integer NOT NULL DEFAULT nextval('sala_sequence'),
+    nome "char" NOT NULL,
+    quantidade integer NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE public.sala
+    OWNER to postgres;
+
+CREATE TABLE public.agendamento
+(
+    id integer NOT NULL DEFAULT nextval('agendamento_sequence'),
+    sala_id integer NOT NULL,
+    users_id integer NOT NULL,
+    data_inicial date NOT NULL,
+    data_final date NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (sala_id)
+        REFERENCES public.sala (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    FOREIGN KEY (users_id)
+        REFERENCES public.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+ALTER TABLE public.agendamento
+    OWNER to postgres;
+
+ALTER TABLE public.agendamento
+    ALTER COLUMN data_inicial TYPE timestamp(6) without time zone ;
+
+ALTER TABLE public.agendamento
+    ALTER COLUMN data_final TYPE timestamp(6) without time zone ;
+
+ALTER TABLE public.users DROP COLUMN update_at;
+
+ALTER TABLE public.users DROP COLUMN created_at;
+
+ALTER TABLE public.users
+    ADD COLUMN email "char" NOT NULL;
+
+ALTER TABLE public.sala
+    ALTER COLUMN nome TYPE character(200);
+
+ALTER TABLE public.sala
+    ADD COLUMN status character(1) NOT NULL;
+
+ALTER TABLE public.users
+    ADD COLUMN status character(1) NOT NULL;
+
+ALTER TABLE public.tags
+    ADD COLUMN status character(1) NOT NULL;
