@@ -27,12 +27,21 @@ class salasDAO{
     async read(){
         let client =  criaClient();
         await client.connect();
-        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} where status = 's'`;
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table}`;
         let result = await client.query(_query);
         await client.end();
         return result.rows
     }
     
+    async readStatus(){
+        let client =  criaClient();
+        await client.connect();
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} where status = 's'`;
+        let result = await client.query(_query);
+        await client.end();
+        return result.rows
+    }
+
     async delete(id){
         let client = criaClient();
         await client.connect();
@@ -63,7 +72,7 @@ class salasDAO{
         // let query = `insert into ${this.config.table} (${this.config.fields.join(',')}) values (${this.config.fields.map(q=>'?').join(',')})`;
         let client = criaClient();
         await client.connect();
-        let _query = `INSERT INTO ${this.config.table} (nome,quantidade) values ($1,$2)`;
+        let _query = `INSERT INTO ${this.config.table} (nome,quantidade,status) values ($1,$2,'s')`;
         let values = [questionario.nome,questionario.quantidade];
         await client.query(_query,values);
         return true

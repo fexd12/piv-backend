@@ -29,6 +29,18 @@ router.get('/',async (req,res)=>{
     })
 })
 
+router.get('/status',async (req,res)=>{
+    let dao = new salasDAO();
+
+    await dao.readStatus().then((result)=>{
+        //console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }).catch((a)=>{
+        //console.log(a);
+        res.send(a)
+    })
+})
+
 router.post('/',async(req,res)=>{
     let dao = new salasDAO;
     await dao.insertInto(req.body).catch((a)=>{
