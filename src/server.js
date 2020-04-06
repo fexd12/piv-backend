@@ -7,6 +7,7 @@ import tag from './api/tag';
 import users from  './api/users';
 import userstag from './api/userstag';
 import salas from './api/salas';
+import agendamento from './api/agendamento';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/tag',tag);
 app.use('/users',users);
 app.use('/userstag',userstag);
 app.use('/salas',salas);
+app.use('/agendamento',agendamento);
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
