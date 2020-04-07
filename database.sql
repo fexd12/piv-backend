@@ -205,3 +205,32 @@ ALTER TABLE public.users
 
 ALTER TABLE public.tags
     ADD COLUMN status character(1) NOT NULL;
+
+ALTER TABLE public.agendamento
+    RENAME data_inicial TO data;
+
+ALTER TABLE public.agendamento
+    ALTER COLUMN data TYPE timestamp(6) with time zone ;
+
+ALTER TABLE public.agendamento
+    RENAME data_final TO data_inicial;
+
+ALTER TABLE public.agendamento
+    ALTER COLUMN data_inicial TYPE timestamp(6) with time zone ;
+
+ALTER TABLE public.agendamento
+    ADD COLUMN data_final timestamp(6) with time zone;
+
+ALTER TABLE public.agendamento
+    RENAME users_id TO users_tags_id;
+
+ALTER TABLE public.agendamento
+    ALTER COLUMN data_final SET NOT NULL;
+
+ALTER TABLE public.agendamento
+    ADD FOREIGN KEY (users_tags_id)
+    REFERENCES public.users_tag (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
