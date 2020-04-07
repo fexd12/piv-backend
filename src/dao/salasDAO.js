@@ -50,11 +50,11 @@ class salasDAO{
         return result
     }
 
-    async update(questionario){
+    async updateStatus(id){
         let client = criaClient();
         await client.connect();
-        let _query = `UPDATE ${this.config.table} SET nome=$1, quantidade=$2 WHERE ${this.config.pk} = $3`;
-        let result = await client.query(_query,[questionario.nome,questionario.quantidade,questionario.id])
+        let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
+        let result = await client.query(_query,[id])
         
         return result
     }
