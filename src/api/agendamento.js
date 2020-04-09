@@ -20,9 +20,20 @@ router.post('/',async (req,res)=>{
 });
 
 router.get('/',async (req,res)=>{
+    let tag = req.query.tag
     let dao = new agendamentoDAO();
 
-    await dao.read().catch((a)=>{
+    await dao.read(tag).then((result)=>{
+        if(result == undefined){
+            res.status(200).send('tag nao possui agendamento')
+        }else{
+            result.usuario = result.usuario.trim()
+            result.sala = result.sala.trim()
+            res.status(200).send(result);
+        }
+    })
+    .catch((a)=>{
+        console.log(a);
         res.send(a);
     })
 })

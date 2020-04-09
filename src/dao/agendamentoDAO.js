@@ -28,7 +28,7 @@ class agendamentoDAO {
     return result.rowCount;
   }
 
-  async read() {
+  async read(tag) {
     let client = criaClient();
     await client.connect();
     let _query = `SELECT ag.id, ag.sala_id, ag.users_tags_id, u.name as Usuario, ag.data, ag.data_inicial as Horario_Inicial, ag.data_final as Horario_Final, t.tag, ut.acesso,s.nome as Sala
@@ -40,10 +40,15 @@ class agendamentoDAO {
   INNER JOIN users as u
     on u.id = ut.id_users
   INNER JOIN sala as s
-    on s.id = ag.sala_id`;
+    on s.id = ag.sala_id
+     where t.tag = '${tag}'`;
     let result = await client.query(_query);
     await client.end();
-    return result.rows;
+    if(result.rowCount<1){
+      return undefined
+    }else{
+      return result.rows[0];
+    }
   }
 
   async readStatus() {
