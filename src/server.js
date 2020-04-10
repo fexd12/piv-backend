@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import tempo from './api/tempo';
 import tag from './api/tag';
 import users from  './api/users';
 import userstag from './api/userstag';
@@ -15,7 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.use('/tempo',tempo);
 app.use('/tag',tag);
 app.use('/users',users);
 app.use('/userstag',userstag);
