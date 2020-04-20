@@ -5,10 +5,7 @@ const router = Router();
 
 router.get('/',async (req,res) => {
     const date = moment();
-    let obj = {
-        hora:date.format('HH:mm')
-    }
-    res.send(obj);
+    res.send(date.format('HH:mm'));
 })
 
 export default router
