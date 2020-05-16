@@ -1,7 +1,7 @@
 import {Router} from 'express';
 
-import {agendamentoDAO} from '../dao/agendamentoDAO';
-import {salasDAO} from '../dao/salasDAO'
+const {agendamentoDAO}=require('../dao/agendamentoDAO');
+const {salasDAO}= require('../dao/salasDAO')
 import moment from 'moment';
 
 const router = Router();

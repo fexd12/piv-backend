@@ -1,8 +1,8 @@
 import {Router} from 'express';
 
-import {userstagDAO} from '../dao/userstagDAO';
-import {usersDAO} from '../dao/usersDAO';
-import {tagDAO} from '../dao/tagDAO';
+const {userstagDAO} =require ('../dao/userstagDAO');
+const {usersDAO} = require('../dao/usersDAO');
+const {tagDAO} = require('../dao/tagDAO');
 
 const router = Router();
 

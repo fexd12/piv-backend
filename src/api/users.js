@@ -1,6 +1,6 @@
 import {Router} from 'express';
 
-import {usersDAO} from '../dao/usersDAO';
+const {usersDAO} = require('../dao/usersDAO');
 
 const router = Router();
 
