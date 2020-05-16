@@ -27,39 +27,24 @@ router.post('/',async (req,res)=>{
 router.get('/all',async(req,res)=>{
     let dao = new tagDAO();
 
-    await dao.readAll().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+    let obj = await dao.readAll()
+    res.status(200).send(JSON.stringify(obj));
     
 });
 
 router.get('/', async (req, res) => {
     let dao = new tagDAO();
 
-    await dao.read().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+    let obj = await dao.read();
+    res.status(200).send(JSON.stringify(obj));
     
 });
 
 router.get('/userstag', async (req, res) => {
     let dao = new tagDAO();
 
-    await dao.readUsersTag().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+    let obj = await dao.readUsersTag();
+    res.status(200).send(JSON.stringify(obj));
     
 });
 

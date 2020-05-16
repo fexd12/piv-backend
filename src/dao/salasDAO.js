@@ -9,7 +9,8 @@ class salasDAO{
             fields: [
               'id',
               'nome',
-              'quantidade'
+              'quantidade',
+              'status'
             ],
             pk: 'id'
           };
@@ -33,11 +34,11 @@ class salasDAO{
         return result.rows
     }
     
-    async readStatus(){
+    async readStatus(questionario){
         let client =  criaClient();
         await client.connect();
-        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} where status = 's'`;
-        let result = await client.query(_query);
+        let _query = `select ${this.config.fields.join(',')} from ${this.config.table} t1 where not exists (select * from agendamento t2 where t1.id = t2.sala_id and t2.data = $1 and t2.data_inicial between $2 and $3)`
+        let result = await client.query(_query,[questionario.data,questionario.hora_inicial,questionario.hora_final]);
         await client.end();
         return result.rows
     }

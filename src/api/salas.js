@@ -7,45 +7,33 @@ const router = Router();
 router.get('/all',async(req,res)=>{
     let dao = new salasDAO();
 
-    await dao.readAll().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+   let obj= await dao.readAll();
+    res.status(200).send(JSON.stringify(obj));
     
 });
 
 router.get('/',async (req,res)=>{
     let dao = new salasDAO();
 
-    await dao.read().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+    let obj = await dao.read();
+    res.status(200).send(JSON.stringify(obj));
 })
 
-router.get('/status',async (req,res)=>{
+router.post('/status',async (req,res)=>{
     let dao = new salasDAO();
-
-    await dao.readStatus().then((result)=>{
-        //console.log(result);
-        res.status(200).send(JSON.stringify(result));
-    }).catch((a)=>{
-        //console.log(a);
-        res.send(a)
-    })
+    let obj={
+        data:req.body.data,
+        hora_inicial:req.body.hora_inicio,
+        hora_final:req.body.hora_final
+    }
+    let response = await dao.readStatus(obj);
+    res.status(200).send(JSON.stringify(response));
 })
 
 router.post('/',async(req,res)=>{
     let dao = new salasDAO;
-    await dao.insertInto(req.body).catch((a)=>{
-        res.send(a)
-    })
+    await dao.insertInto(req.body);
+    res.send({})
 
 })
 
