@@ -19,7 +19,7 @@ exports.default = function(done) {
         ['@babel/env', {
         }]
       ],plugins:[
-          ['@babel/transform-runtime']
+        '@babel/transform-runtime'
       ]
     }))
     // Save each component as a separate file in dist.

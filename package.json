@@ -7,11 +7,23 @@
     "dev": "nodemon --exec babel-node src/server.js",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp"
+    "build": "cross-env BABEL_ENV=cli node_modules/.bin/babel src --out-dir dist --source-maps --copy-files"
   },
   "author": "Felipe Amorim de Melo",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "mssql": "^6.0.1",
+    "pg": "^7.15.0",
+    "requests": "^0.3.0"
+  },
+  "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.4",
@@ -19,25 +31,14 @@
     "@babel/plugin-transform-regenerator": "^7.8.7",
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
-    "axios": "^0.19.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "@babel/runtime": "7.9.6",
+    "cross-env": "^7.0.2",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-plumber": "^1.2.1",
-    "moment": "^2.24.0",
-    "mssql": "^6.0.1",
-    "nodemon": "^2.0.2",
-    "pg": "^7.15.0",
-    "requests": "^0.3.0"
+    "nodemon": "^2.0.2"
   },
-  "devDependencies": {},
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">=8.0.0"
   }
 }
