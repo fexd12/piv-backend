@@ -32,6 +32,7 @@ router.post('/status',async (req,res)=>{
 
 router.post('/',async(req,res)=>{
     let dao = new salasDAO;
+    console.log(req.body);
     let result  = dao.readbyid(req.body.nome);
     if(!result){
         await dao.insertInto(req.body);    

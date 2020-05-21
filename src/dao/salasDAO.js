@@ -63,7 +63,7 @@ class salasDAO{
     async readbyid(id){
         let client = criaClient();
         await client.connect();
-        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE nome = ${id}`;
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE nome = '${id}'`;
         let result = await client.query(_query);
         await client.end();
         return result.rows
