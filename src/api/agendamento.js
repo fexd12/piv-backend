@@ -26,7 +26,7 @@ router.get('/',async (req,res)=>{
     if(result == undefined){
         res.status(200).send('tag nao possui agendamento')
     }else{
-        console.log(result)
+        // console.log(result)
         result.usuario = result.usuario.trim();
         result.sala = result.sala.trim();
         result.data = result.data.trim();

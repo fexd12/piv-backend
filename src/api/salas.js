@@ -32,24 +32,21 @@ router.post('/status',async (req,res)=>{
 
 router.post('/',async(req,res)=>{
     let dao = new salasDAO;
-    await dao.insertInto(req.body);
-    res.send({})
-
+    let result  = dao.readbyid(req.body.nome);
+    if(!result){
+        await dao.insertInto(req.body);    
+        res.send({});
+    }
+    else{
+        res.send('nome de sala já cadastrada');
+    }
 })
 
-// router.put('/:id',async (req,res)=>{
-//     let dao = new salasDAO;
-//     await dao.update(req.body).catch((a)=>{
-//         res.send(a)
-//     })
-// })
-
-// router.delete('/:id',async (req,res)=>{
-//     let dao = new salasDAO;
-    
-//     await dao.delete(req.params.id).catch((a)=>{
-//         res.send(a)
-//     })
-// })
+router.get('/agendamento/:sala_id',async(req,res)=>{
+    let dao = new salasDAO;
+    let id = req.params.sala_id;
+    let result = await dao.readAgendamento(id);
+    res.send(result);
+})
 
 export default router

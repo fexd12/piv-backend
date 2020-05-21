@@ -63,7 +63,7 @@ class salasDAO{
     async readbyid(id){
         let client = criaClient();
         await client.connect();
-        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE ${this.config.pk} = ${id}`;
+        let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE nome = ${id}`;
         let result = await client.query(_query);
         await client.end();
         return result.rows
@@ -77,6 +77,25 @@ class salasDAO{
         let values = [questionario.nome,questionario.quantidade];
         await client.query(_query,values);
         return true
+    }
+
+    async readAgendamento(id){
+        let client =  criaClient();
+        await client.connect();
+        let _query = `SELECT ag.id, ag.sala_id, ag.users_tags_id, u.name as Usuario, ag.data, ag.data_inicial as Horario_Inicial, ag.data_final as Horario_Final, t.tag, ut.acesso,s.nome as Sala
+        FROM agendamento as ag
+      inner join users_tag as ut
+        ON ut.id = ag.users_tags_id
+      INNER JOIN tags as t
+        ON t.id = ut.id_tag
+      INNER JOIN users as u
+        on u.id = ut.id_users
+      INNER JOIN sala as s
+        on s.id = ag.sala_id
+         where ag.sala_id = '${id}'`
+        let result = await client.query(_query,[id]);
+        await client.end();
+        return result.rows
     }
 }
 
