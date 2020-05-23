@@ -47,7 +47,7 @@ class usersDAO{
         await client.connect();
         let _query = `UPDATE ${this.config.table} SET name=$1, email=$2 WHERE ${this.config.pk} = $3`;
         let result = await client.query(_query,[questionario.name,questionario.email,questionario.id])
-        
+        await client.end();
         return result
     }
     
@@ -56,6 +56,7 @@ class usersDAO{
         await client.connect();
         let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
         let result = await client.query(_query,[id])
+        await client.end();
         
         return result
     }
@@ -66,7 +67,7 @@ class usersDAO{
         let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE name = '${id}'`;
         let result = await client.query(_query);
         await client.end();
-        return result.rows
+        return result.rowCount
     }
 
     async insertInto(questionario){
@@ -76,6 +77,7 @@ class usersDAO{
         let _query = `INSERT INTO ${this.config.table} (name,email,status) values ($1,$2,'s')`;
         let values = [questionario.name,questionario.email];
         await client.query(_query,values);
+        await client.end();
         return true
     }
 

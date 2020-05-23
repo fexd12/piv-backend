@@ -23,7 +23,7 @@ app.use('/agendamento',agendamento);
 app.use('/hora',hora);
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.send('<p style="text-align:center;">Hello World!</p>');
 });
 
 let port = process.env.port || 3000;

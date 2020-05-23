@@ -32,15 +32,12 @@ router.post('/status',async (req,res)=>{
 
 router.post('/',async(req,res)=>{
     let dao = new salasDAO;
-    console.log(req.body);
-    let result  = dao.readbyid(req.body.nome);
-    if(!result){
-        await dao.insertInto(req.body);    
-        res.send({});
-    }
-    else{
-        res.send('nome de sala já cadastrada');
-    }
+    await dao.readbyid(req.body.nome).then(async (a)=>{
+        if(a < 1){
+            await dao.insertInto(req.body);    
+            res.send({});
+        }
+    })
 })
 
 router.get('/agendamento/:sala_id',async(req,res)=>{

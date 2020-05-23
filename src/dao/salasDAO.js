@@ -56,6 +56,7 @@ class salasDAO{
         await client.connect();
         let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
         let result = await client.query(_query,[id])
+        client.end()
         
         return result
     }
@@ -65,8 +66,9 @@ class salasDAO{
         await client.connect();
         let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE nome = '${id}'`;
         let result = await client.query(_query);
+        console.log(result);
         await client.end();
-        return result.rows
+        return result.rowCount
     }
 
     async insertInto(questionario){
@@ -76,6 +78,7 @@ class salasDAO{
         let _query = `INSERT INTO ${this.config.table} (nome,quantidade,status) values ($1,$2,'s')`;
         let values = [questionario.nome,questionario.quantidade];
         await client.query(_query,values);
+        client.end();
         return true
     }
 

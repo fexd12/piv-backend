@@ -27,14 +27,12 @@ router.get('/userstag',async (req,res)=>{
 
 router.post('/',async(req,res)=>{
     let dao = new usersDAO;
-    let result = await dao.readbyid(req.body.name);
-    if (!result){
-        await dao.insertInto(req.body);
-        res.send({});
-    }
-    else{
-        res.send('nome de usuario já cadastrada');
-    }
+    await dao.readbyid(req.body.name).then(async (a)=>{
+        if(a < 1){
+            await dao.insertInto(req.body);
+        }
+    })
+    res.send({})
 })
 
 router.put('/:id',async (req,res)=>{

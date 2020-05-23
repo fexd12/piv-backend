@@ -40,7 +40,7 @@ class userstagDAO{
             questionario.name,
             Number(questionario.acesso)
         ];
-        await client.query(_query,values).catch((a)=>console.log(a))
+        await client.query(_query,[values]);
         await client.end();
         return true
     }
@@ -51,6 +51,7 @@ class userstagDAO{
         let _query = `SELECT ${this.config.fields.join(',')} FROM ${this.config.table} WHERE ${this.config.pk} = $1`
 
         let result = await client.query(_query,[id]);
+        client.end();
         return result.rows
 
     }

@@ -79,7 +79,7 @@ class tagDAO{
         await client.connect();
         let _query = `UPDATE ${this.config.table} SET status='a' WHERE ${this.config.pk} = $1`;
         let result = await client.query(_query,[id])
-
+        await client.end();
         return result
     }
 }

@@ -79,7 +79,7 @@ class agendamentoDAO {
       questionario.quantidade,
       questionario.id,
     ]);
-
+    await client.end();
     return result;
   }
 
@@ -106,7 +106,8 @@ class agendamentoDAO {
       questionario.horaInicio,
       questionario.horaFinal,
     ];
-    await client.query(_query, values);
+    await client.query(_query, [values]);
+    await client.end();
     return true;
   }
 }
