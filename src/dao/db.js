@@ -4,7 +4,7 @@ require('dotenv').config();
 function criaClient(){
     return new Client({
         user: 'postgres',
-        host: 'localhost',
+        host: '35.247.222.48',
         database: 'pi_v',
         password: '1234',
         port:5432

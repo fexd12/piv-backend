@@ -3,6 +3,7 @@ import {Router} from 'express';
 const {agendamentoDAO}=require('../dao/agendamentoDAO');
 const {salasDAO}= require('../dao/salasDAO')
 import moment from 'moment';
+import { json } from 'body-parser';
 
 const router = Router();
 
