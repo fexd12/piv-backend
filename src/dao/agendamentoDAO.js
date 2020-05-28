@@ -106,7 +106,7 @@ class agendamentoDAO {
       questionario.horaInicio,
       questionario.horaFinal,
     ];
-    await client.query(_query, [values]);
+    await client.query(_query, values);
     await client.end();
     return true;
   }

@@ -20,7 +20,7 @@ router.post('/',async (req,res)=>{
 router.get('/',async (req,res)=>{
     let tag = req.query.tag
     let dao = new agendamentoDAO();
-    let date = moment();
+    let date = moment().utcOffset('-0300');
 
     let result = await dao.read(tag);
 
@@ -33,7 +33,7 @@ router.get('/',async (req,res)=>{
         result.data = result.data.trim();
         result.horario_inicial = result.horario_inicial.trim();
         result.horario_final = result.horario_final.trim();
-        result.data_atual = date.format('dd-MM-yyyy');
+        result.data_atual = date.format('DD-MM-YYYY');
         result.hora_atual = date.format('HH:mm');
         res.status(200).send(result);
     }
