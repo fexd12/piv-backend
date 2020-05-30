@@ -31,7 +31,7 @@ class agendamentoDAO {
   async read(tag) {
     let client = criaClient();
     await client.connect();
-    let _query = `SELECT ag.id, ag.sala_id, ag.users_tags_id, u.name as Usuario, ag.data, ag.data_inicial as Horario_Inicial, ag.data_final as Horario_Final, t.tag, ut.acesso,s.nome as Sala
+    let _query = `SELECT u.name as Usuario, ag.data, ag.data_inicial as Horario_Inicial, ag.data_final as Horario_Final, t.tag, ut.acesso,s.nome as Sala
     FROM agendamento as ag
   inner join users_tag as ut
     ON ut.id = ag.users_tags_id
