@@ -41,20 +41,21 @@ router.get('/',async (req,res)=>{
 
         console.log(horaConferir);
         console.log(hora_atual);
+        console.log(result);
 
-        if(result.acesso == 1  && dataConferir.isSame(moment(data_atual,"DD-MM-YYYY")) && moment(hora_atual,"HH:mm").isSameOrBefore(horaConferir) ){
+        if(result.acesso === 1  && dataConferir.isSame(moment(data_atual,"DD-MM-YYYY")) && moment(hora_atual,"HH:mm").isSameOrBefore(horaConferir) ){
             let obj={
                 acende:1
             }
             res.send(obj);
         }
-        else if(result.acesso === 0  && dataConferir.isSame(moment(data_atual,"DD-MM-YYYY")) && moment(hora_atual,"HH:mm").isSameOrBefore(horaConferir) ){
+        else if(result.acesso === 0  && moment(data_atual,"DD-MM-YYYY").isSame(dataConferir) && moment(hora_atual,"HH:mm").isSameOrBefore(horaConferir) ){
             let obj={
                 acende:0
             }
             res.send(obj);
         }else{
-            res.send('tag nao possui agendamento')
+            res.send({acende:3})
         }
     }
  
