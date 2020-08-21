@@ -34,13 +34,13 @@ class userstagDAO{
         let client = criaClient();
         await client.connect();
         let i=1
-        let _query = `insert into ${this.config.table} (${this.config.fields.join(',')}) values (${this.config.fields.map(q=>`${'$'+ i++}`).join(',')})`;
+        let _query = `insert into ${this.config.table} (${this.config.fields.join(',')}) values ($1,$2,$3)`;
         let values=[
             questionario.tag,
             questionario.name,
             Number(questionario.acesso)
         ];
-        await client.query(_query,[values]);
+        await client.query(_query,values);
         await client.end();
         return true
     }
